@@ -14,7 +14,7 @@
             :key="item.id"
             @click="del(index)"
           >
-            {{ index + 1 }}--{{ item.text }}
+            {{ index + 1 }} . {{ item.text }}
           </li>
         </transition-group>
       </ul>
@@ -23,12 +23,11 @@
       <p class="done-title">Done</p>
       <ul class="doneUl">
         <li v-for="(item, index) in doneList" :key="item.id">
-          {{ index + 1 }}--{{ item.text }}
+          {{ index + 1 }} . {{ item.text }}
         </li>
       </ul>
     </div>
     <div class="clear-btn-box">
-      <!-- <a href="#" @click="clear">clear</a> -->
       <input class="clear-btn" type="button" value="CLEAR" @click="clear" />
     </div>
   </div>
@@ -81,6 +80,7 @@ export default {
 <style scoped>
 .contentBox {
   width: 100%;
+  overflow: scroll;
 }
 
 .changeRoute,
@@ -89,15 +89,13 @@ export default {
   justify-content: center;
 }
 
-.changeRoute a,
-.clear-btn-box a {
+.changeRoute a {
   color: blue;
   margin: 2px 8px;
   text-decoration: none;
 }
 
-.changeRoute a:active,
-.clear-btn-box a:active {
+.changeRoute a:active{
   color: red;
 }
 
@@ -121,17 +119,17 @@ export default {
 .done-title {
   font-size: 1.5rem;
   font-weight: 400;
-  margin: 0.5rem 1rem;
+  width: 4rem;
+  margin: 0.5rem auto;
 }
 .clear-btn {
   font-size: 0.9rem;
-  /* font-weight: 500; */
   padding: 0.3rem 0.5rem;
   background-color: lightblue;
 
 }
 li {
-  margin: 0.5rem 0.3rem;
+  margin: 0.5rem 1rem 0;
   list-style-type: none;
 }
 

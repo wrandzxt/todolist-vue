@@ -24,7 +24,6 @@
     </div>
     <!-- 中间组件 -->
     <content-box :infoObj="list" ref="com1"></content-box>
-
     <!-- 尾部 -->
     <div class="footer">
       <p>Copyright © 2019-~ wr</p>
