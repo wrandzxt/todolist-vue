@@ -1,149 +1,149 @@
 <template>
   <div class="contentBox">
-    <div id="change">
-      <a href="#" @click="showTodo=true,showDone=true">All</a>
-      <a href="#" @click="showTodo=true,showDone=false">Todo</a>
-      <a href="#" @click="showTodo=false,showDone=true">Done</a>
+    <div class="change">
+      <a href="#" @click="(showTodo = true), (showDone = true)">All</a>
+      <a href="#" @click="(showTodo = true), (showDone = false)">Todo</a>
+      <a href="#" @click="(showTodo = false), (showDone = true)">Done</a>
     </div>
-    <div id="todo" v-show="showTodo">
+    <div class="todo" v-show="showTodo">
       <h3>Todo</h3>
       <ul id="todoUl">
         <transition-group appear>
-          <li v-for="(item,index) in todoList" :key="item.id" @click="del(index)">{{ index + 1 }}--{{ item.text }}</li>
+          <li
+            v-for="(item, index) in todoList"
+            :key="item.id"
+            @click="del(index)"
+          >
+            {{ index + 1 }}--{{ item.text }}
+          </li>
         </transition-group>
-
       </ul>
     </div>
-    <div id="done" v-show="showDone">
+    <div class="done" v-show="showDone">
       <h3>Done</h3>
-      <ul id="doneUl">
-        <li v-for="(item,index) in doneList" :key="item.id">{{ index + 1 }}--{{ item.text }}</li>
+      <ul class="doneUl">
+        <li v-for="(item, index) in doneList" :key="item.id">
+          {{ index + 1 }}--{{ item.text }}
+        </li>
       </ul>
     </div>
-    <div id="clear">
+    <div class="clear">
       <a href="#" @click="clear">clear</a>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'contentBox',
-    data() {
-      return {
-        showTodo: true,
-        showDone: true,
+export default {
+  name: "contentBox",
+  data() {
+    return {
+      showTodo: true,
+      showDone: true,
+    };
+  },
+  computed: {
+    list() {
+      return this.infoObj;
+    },
+    todoList() {
+      return this.list.filter((item) => {
+        if (!item.done) return item;
+      });
+    },
+    doneList() {
+      return this.list.filter((item) => {
+        if (item.done) return item;
+      });
+    },
+  },
+  props: ["infoObj"],
+  methods: {
+    del(index) {
+      this.todoList[index].done = true;
+      this.save();
+    },
+    clear() {
+      for (let i = this.list.length - 1; i >= 0; i--) {
+        if (this.list[i].done) this.list.splice(i, 1);
       }
+      this.save();
     },
-    computed: {
-      list() {
-        return this.infoObj
-      },
-      todoList() {
-        return this.list.filter(item => {
-          if (!item.done) return item
-        })
-      },
-      doneList() {
-        return this.list.filter(item => {
-          if (item.done) return item
-        })
-      }
+    save() {
+      localStorage.setItem("todo", JSON.stringify(this.list));
     },
-    props: ['infoObj'],
-    methods: {
-      del(index) {
-        this.todoList[index].done = true;
-        this.save()
-      },
-      clear() {
-        for (let i = this.list.length - 1; i >= 0; i--) {
-          if (this.list[i].done)
-            this.list.splice(i, 1)
-        }
-        this.save();
-      },
-      save() {
-        localStorage.setItem('todo', JSON.stringify(this.list));
-      },
-      // 动画函数
-
-    },
-
-
-  }
+    // 动画函数
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .contentBox {
-    width: 100%;
-    height: 100%;
+.contentBox {
+  width: 100%;
+  height: 100%;
+}
 
+.change,
+.clear {
+  display: flex;
+  justify-content: center;
+}
 
-  }
+.change a,
+.clear a {
+  color: blue;
+  margin: 2px 8px;
+  text-decoration: none;
+}
 
-  #change,
-  #clear {
-    display: flex;
-    justify-content: center;
-  }
+.change a:active,
+.clear a:active {
+  color: red;
+}
 
-  #change a,
-  #clear a {
-    color: blue;
-    margin: 2px 8px;
-    text-decoration: none;
-  }
+.todo,
+.done {
+  margin: auto;
+  width: 80%;
+  background-color: #ccc;
+  border-radius: 8px;
+}
 
-  #change a:active,
-  #clear a:active {
-    color: red;
-  }
+.todo {
+  color: #000;
+}
 
+.done {
+  color: #555;
+}
 
-  #todo,
-  #done {
-    margin: auto;
-    width: 80%;
-    background-color: #CCC;
-    border-radius: 8px;
-  }
+h3 {
+  font-size: 2rem;
+  margin: 5px 15px;
+}
 
-  #todo {
-    color: #000;
-  }
+li {
+  margin: 8px 5px;
+  list-style-type: none;
+}
 
-  #done {
-    color: #555;
-  }
+#done li {
+  text-decoration: line-through;
+}
 
-  h3 {
-    font-size: 2rem;
-    margin: 5px 15px;
-  }
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(80px);
+}
 
-  li {
-    margin: 8px 5px;
-    list-style-type: none;
-  }
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.6s ease;
+}
 
-  #done li {
-    text-decoration: line-through;
-  }
-
-  .v-enter,
-  .v-leave-to {
-    opacity: 0;
-    transform: translateY(80px);
-  }
-
-  .v-enter-active,
-  .v-leave-active {
-    transition: all 0.6s ease;
-  }
-
-  /* 下面的 v-move  和 v-leave-active配合使用  能够实现后续的元素  渐渐地飘上去的效果
+/* 下面的 v-move  和 v-leave-active配合使用  能够实现后续的元素  渐渐地飘上去的效果
   .v-move {
     transition: all 0.6s ease;
 

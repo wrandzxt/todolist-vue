@@ -3,6 +3,7 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
+// 自动聚焦
 Vue.directive('focus', {
   bind: function () { 
  
