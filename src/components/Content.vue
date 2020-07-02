@@ -1,12 +1,12 @@
 <template>
   <div class="contentBox">
-    <div class="change">
+    <div class="changeRoute">
       <a href="#" @click="(showTodo = true), (showDone = true)">All</a>
       <a href="#" @click="(showTodo = true), (showDone = false)">Todo</a>
       <a href="#" @click="(showTodo = false), (showDone = true)">Done</a>
     </div>
-    <div class="todo" v-show="showTodo">
-      <h3>Todo</h3>
+    <div class="todo-box" v-show="showTodo">
+      <p class="todo-title">Todo</p>
       <ul id="todoUl">
         <transition-group appear>
           <li
@@ -19,16 +19,17 @@
         </transition-group>
       </ul>
     </div>
-    <div class="done" v-show="showDone">
-      <h3>Done</h3>
+    <div class="done-box" v-show="showDone">
+      <p class="done-title">Done</p>
       <ul class="doneUl">
         <li v-for="(item, index) in doneList" :key="item.id">
           {{ index + 1 }}--{{ item.text }}
         </li>
       </ul>
     </div>
-    <div class="clear">
-      <a href="#" @click="clear">clear</a>
+    <div class="clear-btn-box">
+      <!-- <a href="#" @click="clear">clear</a> -->
+      <input class="clear-btn" type="button" value="CLEAR" @click="clear" />
     </div>
   </div>
 </template>
@@ -77,54 +78,60 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .contentBox {
   width: 100%;
-  height: 100%;
 }
 
-.change,
-.clear {
+.changeRoute,
+.clear-btn-box {
   display: flex;
   justify-content: center;
 }
 
-.change a,
-.clear a {
+.changeRoute a,
+.clear-btn-box a {
   color: blue;
   margin: 2px 8px;
   text-decoration: none;
 }
 
-.change a:active,
-.clear a:active {
+.changeRoute a:active,
+.clear-btn-box a:active {
   color: red;
 }
 
-.todo,
-.done {
+.todo-box,
+.done-box {
   margin: auto;
-  width: 80%;
+  width: 95%;
   background-color: #ccc;
-  border-radius: 8px;
+  border-radius: 0.7rem;
 }
 
-.todo {
+.todo-title {
   color: #000;
 }
 
-.done {
+.done-title {
   color: #555;
 }
 
-h3 {
-  font-size: 2rem;
-  margin: 5px 15px;
+.todo-title,
+.done-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0.5rem 1rem;
 }
+.clear-btn {
+  font-size: 0.9rem;
+  /* font-weight: 500; */
+  padding: 0.3rem 0.5rem;
+  background-color: lightblue;
 
+}
 li {
-  margin: 8px 5px;
+  margin: 0.5rem 0.3rem;
   list-style-type: none;
 }
 

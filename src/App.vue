@@ -41,7 +41,7 @@ export default {
     return {
       list: [],
       simInfo: {},
-      text: "是时候展现真正的技术了",
+      text: "",
       done: false,
       id: Date.now(),
     };
